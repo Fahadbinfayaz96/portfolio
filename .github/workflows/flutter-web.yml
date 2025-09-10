@@ -18,8 +18,8 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.33.0-1.0.pre.792'
-          channel: 'master'
+          flutter-version: '3.35.3'
+          channel: 'stable'
       # Step 3: Build Flutter Web
       - name: Build Web
         run: flutter build web --release
