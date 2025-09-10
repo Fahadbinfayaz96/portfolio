@@ -8,6 +8,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # This is crucial!
+      pages: write
+      id-token: write
 
     steps:
       # Step 1: Checkout repo
