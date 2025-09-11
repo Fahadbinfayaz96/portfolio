@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class LitPortfolio extends StatelessWidget {
-  const LitPortfolio({super.key});
+class PortfolioScreen extends StatelessWidget {
+  const PortfolioScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Your Name - Flutter Developer',
+      title: 'Fahad Bin Fayaz - Flutter Developer',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         fontFamily: 'Poppins',
@@ -59,8 +59,13 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   @override
   Widget build(BuildContext context) {
     final double shrinkRate = 0.5;
-    final double expandedHeight = 300 - _scrollOffset * shrinkRate;
-    final double avatarSize = expandedHeight > 120 ? 150 : expandedHeight * 0.8;
+    final double expandedHeight = (300 - _scrollOffset * shrinkRate).clamp(
+      0.0,
+      300.0,
+    );
+    final double avatarSize = expandedHeight > 120
+        ? 150
+        : (expandedHeight * 0.8).clamp(0.0, 150.0);
 
     return Scaffold(
       backgroundColor: Colors.grey[50],
