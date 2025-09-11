@@ -3,34 +3,50 @@ name: Deploy Flutter Web to GitHub Pages
 on:
   push:
     branches:
-      - main   # Run only when pushing to main branch
+      - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # This is crucial!
+      contents: write
       pages: write
       id-token: write
 
     steps:
-      # Step 1: Checkout repo
+      # Step 1: Checkout repo (updated to v4)
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # Step 2: Install Flutter
+      # Step 2: Install Flutter (with caching)
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.35.3'
           channel: 'stable'
-      # Step 3: Build Flutter Web
-      - name: Build Web
-        run: flutter build web --release --base-href /portfolio/ 
+          cache: true  # Added for faster builds
 
-      # Step 4: Deploy to GitHub Pages
+      # Step 3: Install dependencies (CRUCIAL - missing step)
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Step 4: Build Flutter Web
+      - name: Build Web
+        run: flutter build web --release --base-href /portfolio/
+
+      # Optional: Verify the build files
+      - name: Verify build output
+        run: |
+          echo "Build directory contents:"
+          ls -la build/web/
+          echo "Checking base href:"
+          grep "base href" build/web/index.html
+
+      # Step 5: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/web
+          keep_files: false  # Clean previous deployments
+          force_orphan: true # Keep only latest deployment
