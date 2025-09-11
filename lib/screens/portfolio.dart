@@ -568,8 +568,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   }
 // Download CV function 
 Future<void> _downloadCV() async {
-
-  const cvUrl = 'https://drive.google.com/uc?export=download&id=1hkveaA7cWbVFPeEQgASTjupQR_YRYMDA';
+  const cvUrl = 'https://drive.google.com/uc?export=download&id=1MsLGVLtgcyA7chZa8Uye0yAX1STALCR1';
   
   try {
     if (await canLaunchUrl(Uri.parse(cvUrl))) {
