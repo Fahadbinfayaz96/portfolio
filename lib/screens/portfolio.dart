@@ -135,7 +135,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                           ),
                           SizedBox(height: 10),
                           Text(
-                            'Flutter Developer & UI/UX Enthusiast',
+                             'Flutter Developer | Cross-Platform Specialist | UI/UX Craftsman',
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white70,
@@ -169,8 +169,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      'Hello! I\'m Fahad Bin Fayaz, a passionate Flutter developer with a knack for creating beautiful, performant, and user-friendly cross-platform applications. I love turning ideas into reality through code and am constantly learning new technologies to stay ahead of the curve.',
-                      style: TextStyle(fontSize: 16, height: 1.6),
+                      'Hello, I\'m Fahad Bin Fayaz, a dedicated Flutter developer with 3+ years of hands-on experience delivering cross-platform mobile apps for Android and iOS. Skilled in building production-ready apps with clean architecture (BLoC), Firebase integrations, and scalable UI/UX. Successfully delivered 7+ apps including streaming, restaurant, sports coaching, and enterprise solutions, achieving improvements in performance, user engagement, and operational efficiency.',
                       textAlign: TextAlign.justify,
                     ),
                     SizedBox(height: 30),
@@ -198,7 +197,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                 'Bachelor of Engineering in Computer Science',
                             institution:
                                 'SSM College of Science and Technology, Kashmir University',
-                            period: 'Batch sep 2017',
+                            period: '',
                             description:
                                 'Completed comprehensive computer science program with focus on software engineering principles, algorithms, data structures, and software development methodologies.',
                           ),
@@ -279,7 +278,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       projectName: 'Instacoach (Coach App)',
                       description:
                           'An app for coaches to manage availability, view scheduled sessions, and handle bookings.',
-                      techUsed: 'Flutter, Firebase, Provider',
+                      techUsed: 'Flutter, Firebase, Bloc, GetX, MVC, GetStream',
                     ),
                     SizedBox(height: 25),
 
@@ -289,7 +288,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       projectName: 'Instacoach (Client App)',
                       description:
                           'A client-facing app to schedule lessons with coaches, offering in-person and virtual booking options.',
-                      techUsed: 'Flutter, Firebase, Stripe',
+                      techUsed: 'Flutter, Firebase, Bloc, GetX, Clean Architecture, Stripe, GetStream',
                     ),
                     SizedBox(height: 25),
 
@@ -299,7 +298,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       projectName: 'MyBigPlate',
                       description:
                           'A digital food ordering solution integrating a Laravel backend with Flutter frontend. Features: Login, restaurant directory, table booking, etc.',
-                      techUsed: 'Flutter, Laravel, REST API',
+                      techUsed: 'Flutter, Bloc, MVC, Firebase',
                     ),
                     SizedBox(height: 25),
 
@@ -309,7 +308,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       projectName: 'Omega Wallpapers',
                       description:
                           'A platform for browsing and downloading high-quality wallpapers across multiple categories.',
-                      techUsed: 'Flutter, Wallpaper API, Cached Network Image',
+                      techUsed: 'HTML, CSS , .NetCore, MVC, Js',
                     ),
                     SizedBox(height: 25),
 
@@ -319,7 +318,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       projectName: 'SafeView',
                       description:
                           'A video streaming app for kids where they can watch safe content under full parental control. Parents can set preferences, block unsafe videos, and define time limits.',
-                      techUsed: 'Flutter, Firebase, YouTube API',
+                      techUsed: 'Flutter, Firebase, Bloc, GetX, MVC, YouTube API',
                     ),
                     SizedBox(height: 25),
 
@@ -329,7 +328,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       projectName: 'FieldPluse',
                       description:
                           'An app that allows assigning tasks to field workers and tracking their progress in real time.',
-                      techUsed: 'Flutter, Firebase, Google Maps',
+                      techUsed: 'Flutter, Firebase, Bloc, GetX, Clean Architecture, Google Maps',
                     ),
                     SizedBox(height: 25),
 
@@ -339,7 +338,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       projectName: 'Hotel Check-ins',
                       description:
                           'An app streamlining hotel guest check-in/out processes with secure guest data handling.',
-                      techUsed: 'Flutter, Firebase, Secure Storage',
+                      techUsed: 'Flutter, Provider, Firebase',
                     ),
                     SizedBox(height: 25),
 
@@ -349,14 +348,17 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       projectName: 'Digital Menu',
                       description:
                           'A digital restaurant menu app enabling customers to browse and place orders efficiently.',
-                      techUsed: 'Flutter, Firebase, QR Code',
+                      techUsed: 'Flutter, MVC, QR Code',
                     ),
                   ],
                 ),
               ),
 
               // Contact Section
+
+              // In your Contact Section, replace the current content with this:
               Container(
+                // key: _contactKey,
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 60),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -382,16 +384,89 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       style: TextStyle(fontSize: 16, color: Colors.white70),
                     ),
                     SizedBox(height: 30),
+
+                    // Contact Information
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      child: Column(
+                        children: [
+                          // Phone Number
+                          ListTile(
+                            leading: Icon(Icons.phone, color: Colors.white70),
+                            title: Text(
+                              '+91 7006844920', // Replace with your actual phone number
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            onTap: () => _launchURL(
+                              'tel:+917006844920',
+                            ), // Replace with your number
+                          ),
+
+                          // Email
+                          ListTile(
+                            leading: Icon(Icons.email, color: Colors.white70),
+                            title: Text(
+                              'fahadbinfayaz100@gmail.com',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            onTap: () =>
+                                _launchURL('mailto:fahadbinfayaz100@gmail.com'),
+                          ),
+
+                          // Address
+                          ListTile(
+                            leading: Icon(
+                              Icons.location_on,
+                              color: Colors.white70,
+                            ),
+                            title: Text(
+                              'srinagar, Jammu and Kashmir, India',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            onTap: () {
+                              // You could open maps with your location
+                              _launchURL(
+                                'https://maps.google.com/?q=Kashmir,India',
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Download CV Button
+                    Center(
+                      child: ElevatedButton.icon(
+                        onPressed: _downloadCV,
+                        icon: Icon(Icons.download, size: 24),
+                        label: Text(
+                          'Download CV',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.blue.shade800,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 16,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 40),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        _buildSocialButton(
-                          icon: Icons.email,
-                          onPressed: () =>
-                              _launchURL('mailto:fahadbinfayaz100@gmail.com'),
-                          color: Colors.red,
-                        ),
-                        SizedBox(width: 20),
+                        // _buildSocialButton(
+                        //   icon: Icons.email,
+                        //   onPressed: () =>
+                        //       _launchURL('mailto:fahadbinfayaz100@gmail.com'),
+                        //   color: Colors.red,
+                        // ),
+                        // SizedBox(width: 20),
                         _buildSocialButton(
                           icon: AntDesign.github_outline,
                           onPressed: () =>
@@ -406,18 +481,73 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                           ),
                           color: Colors.blue.shade700,
                         ),
-                        // SizedBox(width: 20),
-                        // _buildSocialButton(
-                        //   icon: AntDesign.twitter_outline,
-                        //   onPressed: () =>
-                        //       _launchURL('https://twitter.com/yourprofile'),
-                        //   color: Colors.blue.shade400,
-                        // ),
                       ],
                     ),
                   ],
                 ),
               ),
+              // Container(
+              //   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 60),
+              //   decoration: BoxDecoration(
+              //     gradient: LinearGradient(
+              //       begin: Alignment.topLeft,
+              //       end: Alignment.bottomRight,
+              //       colors: [Colors.blue.shade800, Colors.purple.shade600],
+              //     ),
+              //   ),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       Text(
+              //         'Let\'s Connect!',
+              //         style: TextStyle(
+              //           fontSize: 32,
+              //           fontWeight: FontWeight.bold,
+              //           color: Colors.white,
+              //         ),
+              //       ),
+              //       SizedBox(height: 20),
+              //       Text(
+              //         'I\'m always open to discussing new projects, creative ideas, or opportunities to be part of your vision.',
+              //         style: TextStyle(fontSize: 16, color: Colors.white70),
+              //       ),
+              //       SizedBox(height: 30),
+              //       Row(
+              //         mainAxisAlignment: MainAxisAlignment.center,
+              //         children: [
+              //           _buildSocialButton(
+              //             icon: Icons.email,
+              //             onPressed: () =>
+              //                 _launchURL('mailto:fahadbinfayaz100@gmail.com'),
+              //             color: Colors.red,
+              //           ),
+              //           SizedBox(width: 20),
+              //           _buildSocialButton(
+              //             icon: AntDesign.github_outline,
+              //             onPressed: () =>
+              //                 _launchURL('https://github.com/Fahadbinfayaz96'),
+              //             color: Colors.black,
+              //           ),
+              //           SizedBox(width: 20),
+              //           _buildSocialButton(
+              //             icon: AntDesign.linkedin_outline,
+              //             onPressed: () => _launchURL(
+              //               'https://linkedin.com/in/fahad-bin-fayaz-87349221a',
+              //             ),
+              //             color: Colors.blue.shade700,
+              //           ),
+              //           SizedBox(width: 20),
+              //           // _buildSocialButton(
+              //           //   icon: AntDesign.twitter_outline,
+              //           //   onPressed: () =>
+              //           //       _launchURL('https://twitter.com/yourprofile'),
+              //           //   color: Colors.blue.shade400,
+              //           // ),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
 
               // Footer
               Container(
@@ -436,6 +566,29 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
       ),
     );
   }
+// Download CV function 
+Future<void> _downloadCV() async {
+
+  const cvUrl = 'https://drive.google.com/uc?export=download&id=1hkveaA7cWbVFPeEQgASTjupQR_YRYMDA';
+  
+  try {
+    if (await canLaunchUrl(Uri.parse(cvUrl))) {
+      await launchUrl(Uri.parse(cvUrl));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Could not download CV. Please try again later.'),
+        ),
+      );
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Error downloading CV. Please try again.'),
+      ),
+    );
+  }
+}
 
   Widget _buildEducationItem({
     required String degree,
@@ -544,7 +697,8 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     String? playStoreUrl,
   }) {
     return Card(
-      elevation: 8,
+      elevation: 3,
+      color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
