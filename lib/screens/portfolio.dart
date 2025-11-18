@@ -47,7 +47,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     super.dispose();
   }
 
-  // Helper function to launch URLs
+
   _launchURL(String url) async {
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
@@ -72,7 +72,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
-          // App Bar with shrinking effect
+      
           SliverAppBar(
             expandedHeight: 300,
             floating: false,
@@ -89,7 +89,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                 ),
                 child: Stack(
                   children: [
-                    // Animated background elements
+                    
                     Positioned(
                       top: 50,
                       right: 30,
@@ -135,7 +135,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                           ),
                           SizedBox(height: 10),
                           Text(
-                             'Flutter Developer | Cross-Platform Specialist | UI/UX Craftsman',
+                            'Flutter Developer | Kotlin + Jetpack Compose | Cross-Platform & UI/UX Craftsman',
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white70,
@@ -150,10 +150,10 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
             ),
           ),
 
-          // Main content
+        
           SliverList(
             delegate: SliverChildListDelegate([
-              // About Me Section
+           
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 60),
                 child: Column(
@@ -169,11 +169,11 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      'Hello, I\'m Fahad Bin Fayaz, a dedicated Flutter developer with 3+ years of hands-on experience delivering cross-platform mobile apps for Android and iOS. Skilled in building production-ready apps with clean architecture (BLoC), Firebase integrations, and scalable UI/UX. Successfully delivered 7+ apps including streaming, restaurant, sports coaching, and enterprise solutions, achieving improvements in performance, user engagement, and operational efficiency.',
+                      "Hello, I'm Fahad Bin Fayaz, a dedicated Flutter developer with 3+ years of hands-on experience delivering cross-platform mobile apps for Android and iOS. Skilled in building production-ready apps with clean architecture (BLoC), Firebase integrations, and scalable UI/UX. I also have additional experience in native Android development using Kotlin and Jetpack Compose, enabling me to build performant platform-specific features when needed. I’ve successfully delivered 7+ apps including streaming, restaurant, sports coaching, and enterprise solutions, improving performance, user engagement, and operational efficiency",
                       textAlign: TextAlign.justify,
                     ),
                     SizedBox(height: 30),
-                    // Education Section
+          
                     Container(
                       padding: EdgeInsets.symmetric(
                         horizontal: 24,
@@ -205,7 +205,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       ),
                     ),
                     SizedBox(height: 30),
-                    // Stats or achievements
+               
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -218,7 +218,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                 ),
               ),
 
-              // Skills Section
+         
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 40),
                 color: Colors.grey[100],
@@ -240,23 +240,24 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       children: [
                         _buildSkillChip('Flutter', Icons.phone_iphone),
                         _buildSkillChip('Dart', Icons.code),
+                        _buildSkillChip('Kotlin', Icons.android),
+                        _buildSkillChip('Jetpack Compose', Icons.phone_android),
                         _buildSkillChip('Firebase', Icons.cloud),
                         _buildSkillChip('REST APIs', Icons.api),
                         _buildSkillChip('Provider', Icons.widgets),
                         _buildSkillChip('Bloc', Icons.view_quilt),
                         _buildSkillChip('Git', Icons.history),
                         _buildSkillChip('UI/UX Design', Icons.design_services),
+                        _buildSkillChip('Java', Icons.coffee),
                         _buildSkillChip('C#', Icons.developer_mode),
                         _buildSkillChip('.NET MVC', Icons.layers),
-                        _buildSkillChip('Java', Icons.coffee),
                       ],
                     ),
                   ],
                 ),
               ),
 
-              // Projects Section
-              // Projects Section
+           
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 60),
                 child: Column(
@@ -272,7 +273,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     ),
                     SizedBox(height: 30),
 
-                    // Instacoach (Coach App)
+                   
                     _buildProjectCard(
                       context,
                       projectName: 'Instacoach (Coach App)',
@@ -282,17 +283,18 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     ),
                     SizedBox(height: 25),
 
-                    // Instacoach (Client App)
+                  
                     _buildProjectCard(
                       context,
                       projectName: 'Instacoach (Client App)',
                       description:
                           'A client-facing app to schedule lessons with coaches, offering in-person and virtual booking options.',
-                      techUsed: 'Flutter, Firebase, Bloc, GetX, Clean Architecture, Stripe, GetStream',
+                      techUsed:
+                          'Flutter, Firebase, Bloc, GetX, Clean Architecture, Stripe, GetStream',
                     ),
                     SizedBox(height: 25),
 
-                    // MyBigPlate
+                    
                     _buildProjectCard(
                       context,
                       projectName: 'MyBigPlate',
@@ -302,7 +304,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     ),
                     SizedBox(height: 25),
 
-                    // Omega Wallpapers
+              
                     _buildProjectCard(
                       context,
                       projectName: 'Omega Wallpapers',
@@ -312,27 +314,29 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     ),
                     SizedBox(height: 25),
 
-                    // SafeView
+              
                     _buildProjectCard(
                       context,
                       projectName: 'SafeView',
                       description:
                           'A video streaming app for kids where they can watch safe content under full parental control. Parents can set preferences, block unsafe videos, and define time limits.',
-                      techUsed: 'Flutter, Firebase, Bloc, GetX, MVC, YouTube API',
+                      techUsed:
+                          'Flutter, Firebase, Bloc, GetX, MVC, YouTube API',
                     ),
                     SizedBox(height: 25),
 
-                    // FieldPluse
+                   
                     _buildProjectCard(
                       context,
                       projectName: 'FieldPluse',
                       description:
                           'An app that allows assigning tasks to field workers and tracking their progress in real time.',
-                      techUsed: 'Flutter, Firebase, Bloc, GetX, Clean Architecture, Google Maps',
+                      techUsed:
+                          'Flutter, Firebase, Bloc, GetX, Clean Architecture, Google Maps',
                     ),
                     SizedBox(height: 25),
 
-                    // Hotel Check-ins
+        
                     _buildProjectCard(
                       context,
                       projectName: 'Hotel Check-ins',
@@ -342,7 +346,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     ),
                     SizedBox(height: 25),
 
-                    // Digital Menu
+        
                     _buildProjectCard(
                       context,
                       projectName: 'Digital Menu',
@@ -354,11 +358,9 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                 ),
               ),
 
-              // Contact Section
-
-              // In your Contact Section, replace the current content with this:
+           
               Container(
-                // key: _contactKey,
+         
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 60),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -385,24 +387,24 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     ),
                     SizedBox(height: 30),
 
-                    // Contact Information
+                 
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 20),
                       child: Column(
                         children: [
-                          // Phone Number
+                 
                           ListTile(
                             leading: Icon(Icons.phone, color: Colors.white70),
                             title: Text(
-                              '+91 7006844920', // Replace with your actual phone number
+                              '+91 7006844920', 
                               style: TextStyle(color: Colors.white),
                             ),
                             onTap: () => _launchURL(
                               'tel:+917006844920',
-                            ), // Replace with your number
+                            ), 
                           ),
 
-                          // Email
+                   
                           ListTile(
                             leading: Icon(Icons.email, color: Colors.white70),
                             title: Text(
@@ -413,7 +415,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                 _launchURL('mailto:fahadbinfayaz100@gmail.com'),
                           ),
 
-                          // Address
+                  
                           ListTile(
                             leading: Icon(
                               Icons.location_on,
@@ -424,7 +426,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                               style: TextStyle(color: Colors.white),
                             ),
                             onTap: () {
-                              // You could open maps with your location
+                            
                               _launchURL(
                                 'https://maps.google.com/?q=Kashmir,India',
                               );
@@ -434,7 +436,6 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       ),
                     ),
 
-                    // Download CV Button
                     Center(
                       child: ElevatedButton.icon(
                         onPressed: _downloadCV,
@@ -460,13 +461,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // _buildSocialButton(
-                        //   icon: Icons.email,
-                        //   onPressed: () =>
-                        //       _launchURL('mailto:fahadbinfayaz100@gmail.com'),
-                        //   color: Colors.red,
-                        // ),
-                        // SizedBox(width: 20),
+                 
                         _buildSocialButton(
                           icon: AntDesign.github_outline,
                           onPressed: () =>
@@ -486,70 +481,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   ],
                 ),
               ),
-              // Container(
-              //   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 60),
-              //   decoration: BoxDecoration(
-              //     gradient: LinearGradient(
-              //       begin: Alignment.topLeft,
-              //       end: Alignment.bottomRight,
-              //       colors: [Colors.blue.shade800, Colors.purple.shade600],
-              //     ),
-              //   ),
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       Text(
-              //         'Let\'s Connect!',
-              //         style: TextStyle(
-              //           fontSize: 32,
-              //           fontWeight: FontWeight.bold,
-              //           color: Colors.white,
-              //         ),
-              //       ),
-              //       SizedBox(height: 20),
-              //       Text(
-              //         'I\'m always open to discussing new projects, creative ideas, or opportunities to be part of your vision.',
-              //         style: TextStyle(fontSize: 16, color: Colors.white70),
-              //       ),
-              //       SizedBox(height: 30),
-              //       Row(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: [
-              //           _buildSocialButton(
-              //             icon: Icons.email,
-              //             onPressed: () =>
-              //                 _launchURL('mailto:fahadbinfayaz100@gmail.com'),
-              //             color: Colors.red,
-              //           ),
-              //           SizedBox(width: 20),
-              //           _buildSocialButton(
-              //             icon: AntDesign.github_outline,
-              //             onPressed: () =>
-              //                 _launchURL('https://github.com/Fahadbinfayaz96'),
-              //             color: Colors.black,
-              //           ),
-              //           SizedBox(width: 20),
-              //           _buildSocialButton(
-              //             icon: AntDesign.linkedin_outline,
-              //             onPressed: () => _launchURL(
-              //               'https://linkedin.com/in/fahad-bin-fayaz-87349221a',
-              //             ),
-              //             color: Colors.blue.shade700,
-              //           ),
-              //           SizedBox(width: 20),
-              //           // _buildSocialButton(
-              //           //   icon: AntDesign.twitter_outline,
-              //           //   onPressed: () =>
-              //           //       _launchURL('https://twitter.com/yourprofile'),
-              //           //   color: Colors.blue.shade400,
-              //           // ),
-              //         ],
-              //       ),
-              //     ],
-              //   ),
-              // ),
-
-              // Footer
+          
               Container(
                 padding: EdgeInsets.all(20),
                 color: Colors.grey[900],
@@ -566,28 +498,27 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
       ),
     );
   }
-// Download CV function 
-Future<void> _downloadCV() async {
-  const cvUrl = 'https://drive.google.com/uc?export=download&id=1MsLGVLtgcyA7chZa8Uye0yAX1STALCR1';
-  
-  try {
-    if (await canLaunchUrl(Uri.parse(cvUrl))) {
-      await launchUrl(Uri.parse(cvUrl));
-    } else {
+
+  Future<void> _downloadCV() async {
+    const cvUrl ="https://drive.google.com/uc?export=download&id=1GZPE1wFItfEoyeKXwdwFmtVxePT3P1C3";
+             
+
+    try {
+      if (await canLaunchUrl(Uri.parse(cvUrl))) {
+        await launchUrl(Uri.parse(cvUrl));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Could not download CV. Please try again later.'),
+          ),
+        );
+      }
+    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Could not download CV. Please try again later.'),
-        ),
+        SnackBar(content: Text('Error downloading CV. Please try again.')),
       );
     }
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Error downloading CV. Please try again.'),
-      ),
-    );
   }
-}
 
   Widget _buildEducationItem({
     required String degree,
