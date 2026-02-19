@@ -13,7 +13,15 @@ class PortfolioScreen extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Poppins',
         useMaterial3: true,
+        brightness: Brightness.light,
       ),
+      darkTheme: ThemeData(
+        primarySwatch: Colors.blue,
+        fontFamily: 'Poppins',
+        useMaterial3: true,
+        brightness: Brightness.dark,
+      ),
+      themeMode: ThemeMode.system,
       home: const PortfolioHomePage(),
       debugShowCheckedModeBanner: false,
     );
@@ -30,6 +38,7 @@ class PortfolioHomePage extends StatefulWidget {
 class _PortfolioHomePageState extends State<PortfolioHomePage> {
   final ScrollController _scrollController = ScrollController();
   double _scrollOffset = 0.0;
+  bool _isDark = false;
 
   @override
   void initState() {
@@ -47,12 +56,16 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     super.dispose();
   }
 
-
-  _launchURL(String url) async {
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
+  Future<void> _launchURL(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
-      throw 'Could not launch $url';
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Could not launch $url')));
+      }
     }
   }
 
@@ -60,23 +73,21 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   Widget build(BuildContext context) {
     final double shrinkRate = 0.5;
     final double expandedHeight = (300 - _scrollOffset * shrinkRate).clamp(
-      0.0,
+      120.0,
       300.0,
     );
-    final double avatarSize = expandedHeight > 120
-        ? 150
-        : (expandedHeight * 0.8).clamp(0.0, 150.0);
+    final double avatarSize = expandedHeight > 150 ? 120 : expandedHeight * 0.5;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: _isDark ? Colors.grey[900] : Colors.grey[50],
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
-      
           SliverAppBar(
             expandedHeight: 300,
             floating: false,
             pinned: true,
+            backgroundColor: _isDark ? Colors.grey[900] : Colors.white,
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.pin,
               background: Container(
@@ -84,61 +95,97 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: [Colors.blue.shade800, Colors.purple.shade600],
+                    colors: [
+                      Colors.blue.shade800,
+                      Colors.purple.shade700,
+                      Colors.deepPurple.shade900,
+                    ],
                   ),
                 ),
                 child: Stack(
                   children: [
-                    
                     Positioned(
-                      top: 50,
-                      right: 30,
+                      top: -50,
+                      right: -50,
                       child: Opacity(
                         opacity: 0.1,
-                        child: Icon(Icons.code, size: 150, color: Colors.white),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 20,
-                      left: 20,
-                      child: Opacity(
-                        opacity: 0.1,
-                        child: Icon(
-                          Icons.phone_iphone,
-                          size: 120,
-                          color: Colors.white,
+                        child: Transform.rotate(
+                          angle: 0.3,
+                          child: Icon(
+                            Icons.code_rounded,
+                            size: 250,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
+                    Positioned(
+                      bottom: -30,
+                      left: -30,
+                      child: Opacity(
+                        opacity: 0.1,
+                        child: Transform.rotate(
+                          angle: -0.2,
+                          child: Icon(
+                            Icons.phone_iphone_rounded,
+                            size: 200,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+
                     Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           AnimatedContainer(
-                            duration: Duration(milliseconds: 200),
+                            duration: const Duration(milliseconds: 200),
                             height: avatarSize,
                             width: avatarSize,
                             child: CircleAvatar(
-                              backgroundImage: AssetImage(
+                              backgroundImage: const AssetImage(
                                 'assets/profile/dp.jpeg',
                               ),
+                              backgroundColor: Colors.white,
+                              onBackgroundImageError: (_, __) =>
+                                  const Icon(Icons.person),
                             ),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 16),
                           Text(
                             'Fahad Bin Fayaz',
                             style: TextStyle(
-                              fontSize: 32,
+                              fontSize: expandedHeight > 200 ? 32 : 24,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
+                              letterSpacing: 1.2,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  offset: const Offset(2, 2),
+                                  blurRadius: 4,
+                                ),
+                              ],
                             ),
                           ),
-                          SizedBox(height: 10),
-                          Text(
-                            'Flutter Developer | Kotlin + Jetpack Compose | Cross-Platform & UI/UX Craftsman',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white70,
+                          const SizedBox(height: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              'Flutter Developer | Kotlin • Jetpack Compose | Swift • UIKit',
+                              style: TextStyle(
+                                fontSize: expandedHeight > 200 ? 16 : 14,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         ],
@@ -149,346 +196,398 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
               ),
             ),
           ),
-
-        
           SliverList(
             delegate: SliverChildListDelegate([
-           
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 60),
+              _buildSection(
+                context,
+                title: 'About Me',
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'About Me',
+                      "Hello, I'm Fahad Bin Fayaz, a dedicated Flutter developer with 3+ years of hands-on experience delivering cross-platform mobile apps for Android and iOS. I specialize in building production-ready applications with clean architecture (BLoC), Firebase integrations, and scalable UI/UX solutions.\nBeyond Flutter, I have strong native development capabilities in Android (Kotlin/Jetpack Compose) and iOS (Swift/UIKit), allowing me to implement performant platform-specific features when required. This hybrid expertise ensures I can deliver the right solution for any mobile requirement.",
                       style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue.shade800,
+                        fontSize: 16,
+                        height: 1.6,
+                        color: _isDark ? Colors.white70 : Colors.grey[800],
                       ),
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      "Hello, I'm Fahad Bin Fayaz, a dedicated Flutter developer with 3+ years of hands-on experience delivering cross-platform mobile apps for Android and iOS. Skilled in building production-ready apps with clean architecture (BLoC), Firebase integrations, and scalable UI/UX. I also have additional experience in native Android development using Kotlin and Jetpack Compose, enabling me to build performant platform-specific features when needed. I’ve successfully delivered 7+ apps including streaming, restaurant, sports coaching, and enterprise solutions, improving performance, user engagement, and operational efficiency",
                       textAlign: TextAlign.justify,
                     ),
-                    SizedBox(height: 30),
-          
+
+                    const SizedBox(height: 20),
                     Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 40,
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Colors.blue.shade50, Colors.purple.shade50],
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: Colors.blue.shade100,
+                          width: 1,
+                        ),
                       ),
-                      color: Colors.white,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text(
-                            'Education',
-                            style: TextStyle(
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue.shade800,
-                            ),
-                          ),
-                          SizedBox(height: 30),
-                          _buildEducationItem(
-                            degree:
-                                'Bachelor of Engineering in Computer Science',
-                            institution:
-                                'SSM College of Science and Technology, Kashmir University',
-                            period: '',
-                            description:
-                                'Completed comprehensive computer science program with focus on software engineering principles, algorithms, data structures, and software development methodologies.',
-                          ),
+                          _buildStatItem('7+', 'Projects'),
+                          _buildStatItem('3+', 'Years'),
+                          _buildStatItem('10K+', 'Lines of Code'),
+                          _buildStatItem('100%', 'Satisfaction'),
                         ],
                       ),
                     ),
-                    SizedBox(height: 30),
-               
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        _buildStatItem('7+', 'Projects'),
-                        _buildStatItem('3+', 'Years Experience'),
-                        _buildStatItem('10K+', 'Lines of Code'),
-                      ],
+                  ],
+                ),
+              ),
+
+              _buildSection(
+                context,
+                title: 'Education',
+                child: Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: _isDark ? Colors.grey[800] : Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.blue.shade50,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Icon(
+                              Icons.school_rounded,
+                              color: Colors.blue.shade800,
+                              size: 28,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Bachelor of Engineering in Computer Science',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: _isDark
+                                        ? Colors.white
+                                        : Colors.grey[900],
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  'Kashmir University',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.blue.shade700,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Completed comprehensive computer science program with focus on software engineering principles, algorithms, data structures, and software development methodologies.',
+                        style: TextStyle(
+                          fontSize: 15,
+                          height: 1.5,
+                          color: _isDark ? Colors.white70 : Colors.grey[700],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              _buildSection(
+                context,
+                title: 'Skills & Expertise',
+                child: Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  children: [
+                    _buildSkillChip('Flutter', Bootstrap.google, Colors.blue),
+                    _buildSkillChip(
+                      'Dart',
+                      Bootstrap.code,
+                      Colors.lightBlue.shade400,
+                    ),
+                    _buildSkillChip('Kotlin', Bootstrap.android, Colors.orange),
+                    _buildSkillChip(
+                      'Jetpack Compose',
+                      Bootstrap.android2,
+                      Colors.green.shade400,
+                    ),
+                    _buildSkillChip('Swift', Bootstrap.apple, Colors.grey),
+                    _buildSkillChip(
+                      'UIKit',
+                      Bootstrap.window,
+                      Colors.blue.shade300,
+                    ),
+                    _buildSkillChip('Firebase', Bootstrap.google, Colors.amber),
+                    _buildSkillChip('CI/CD', Bootstrap.gear_fill, Colors.grey),
+                    _buildSkillChip('Provider', Bootstrap.box, Colors.purple),
+                    _buildSkillChip('Bloc', Bootstrap.diagram_3, Colors.blue),
+                    _buildSkillChip('Git/Github', Bootstrap.git, Colors.orange),
+                    _buildSkillChip(
+                      'UI/UX Design',
+                      Bootstrap.palette,
+                      Colors.pink,
+                    ),
+                    _buildSkillChip('Java', Icons.coffee, Colors.brown),
+                    _buildSkillChip('C#', Bootstrap.window, Colors.purple),
+                    _buildSkillChip('.NET MVC', Bootstrap.windows, Colors.blue),
+                    _buildSkillChip(
+                      'Clean Architecture',
+                      Bootstrap.layers,
+                      Colors.teal,
                     ),
                   ],
                 ),
               ),
 
-         
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 40),
-                color: Colors.grey[100],
+              _buildSection(
+                context,
+                title: 'Featured Projects',
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Skills & Expertise',
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue.shade800,
-                      ),
-                    ),
-                    SizedBox(height: 30),
-                    Wrap(
-                      spacing: 12,
-                      runSpacing: 12,
-                      children: [
-                        _buildSkillChip('Flutter', Icons.phone_iphone),
-                        _buildSkillChip('Dart', Icons.code),
-                        _buildSkillChip('Kotlin', Icons.android),
-                        _buildSkillChip('Jetpack Compose', Icons.phone_android),
-                        _buildSkillChip('Firebase', Icons.cloud),
-                        _buildSkillChip('REST APIs', Icons.api),
-                        _buildSkillChip('Provider', Icons.widgets),
-                        _buildSkillChip('Bloc', Icons.view_quilt),
-                        _buildSkillChip('Git', Icons.history),
-                        _buildSkillChip('UI/UX Design', Icons.design_services),
-                        _buildSkillChip('Java', Icons.coffee),
-                        _buildSkillChip('C#', Icons.developer_mode),
-                        _buildSkillChip('.NET MVC', Icons.layers),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-
-           
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 60),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Featured Projects',
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue.shade800,
-                      ),
-                    ),
-                    SizedBox(height: 30),
-
-                   
                     _buildProjectCard(
                       context,
-                      projectName: 'Instacoach (Coach App)',
+                      projectName: 'Instacoach (Coach & Client Apps)',
                       description:
-                          'An app for coaches to manage availability, view scheduled sessions, and handle bookings.',
-                      techUsed: 'Flutter, Firebase, Bloc, GetX, MVC, GetStream',
-                    ),
-                    SizedBox(height: 25),
-
-                  
-                    _buildProjectCard(
-                      context,
-                      projectName: 'Instacoach (Client App)',
-                      description:
-                          'A client-facing app to schedule lessons with coaches, offering in-person and virtual booking options.',
+                          'A comprehensive coaching platform with separate apps for coaches and clients. Features real-time session scheduling, video calls, payment integration, and progress tracking.',
                       techUsed:
-                          'Flutter, Firebase, Bloc, GetX, Clean Architecture, Stripe, GetStream',
+                          'Flutter, Firebase, Bloc, GetX, Stripe, GetStream',
+                      highlights: ['1K+ Users', 'Sports Coaching', 'Real-time'],
                     ),
-                    SizedBox(height: 25),
-
-                    
+                    const SizedBox(height: 20),
                     _buildProjectCard(
                       context,
-                      projectName: 'MyBigPlate',
+                      projectName: 'SafeView - Kids Video Streaming',
                       description:
-                          'A digital food ordering solution integrating a Laravel backend with Flutter frontend. Features: Login, restaurant directory, table booking, etc.',
-                      techUsed: 'Flutter, Bloc, MVC, Firebase',
+                          'A secure video streaming platform for children with full parental control. Features content filtering, time limits, and safe video recommendations.',
+                      techUsed: 'Flutter, Firebase, Bloc, YouTube API, GetX',
+                      highlights: [
+                        'Parental Control',
+                        'Videos Streaming',
+                        'Safe',
+                      ],
                     ),
-                    SizedBox(height: 25),
+                    const SizedBox(height: 20),
+                    _buildProjectCard(
+                      context,
+                      projectName: 'FieldPluse - Task Management',
+                      description:
+                          'Enterprise solution for field workforce management with real-time tracking, task assignment, and performance analytics.',
+                      techUsed:
+                          'Flutter, Firebase, Bloc, Google Maps, Clean Architecture',
+                      highlights: ['Real-time GPS', 'Task Managment'],
+                    ),
+                    const SizedBox(height: 20),
+                    _buildProjectCard(
+                      context,
+                      projectName: 'MyBigPlate - Food Ordering',
+                      description:
+                          'Digital food ordering platform with restaurant discovery, table booking, and seamless payment integration.',
+                      techUsed: 'Flutter, Laravel Backend, Bloc, Firebase, MVC',
+                      highlights: ["Food Ordring",'Online Payment', 'Reviews'],
+                    ),
 
-              
+                    const SizedBox(height: 20),
+
                     _buildProjectCard(
                       context,
                       projectName: 'Omega Wallpapers',
                       description:
-                          'A platform for browsing and downloading high-quality wallpapers across multiple categories.',
-                      techUsed: 'HTML, CSS , .NetCore, MVC, Js',
+                          'A platform for browsing and downloading high-quality wallpapers across multiple categories with seamless user experience.',
+                      techUsed: 'HTML, CSS, .NET Core, MVC, JavaScript',
+                      highlights: ['HD Wallpapers', 'Categories', 'Download'],
                     ),
-                    SizedBox(height: 25),
+                    const SizedBox(height: 20),
 
-              
-                    _buildProjectCard(
-                      context,
-                      projectName: 'SafeView',
-                      description:
-                          'A video streaming app for kids where they can watch safe content under full parental control. Parents can set preferences, block unsafe videos, and define time limits.',
-                      techUsed:
-                          'Flutter, Firebase, Bloc, GetX, MVC, YouTube API',
-                    ),
-                    SizedBox(height: 25),
-
-                   
-                    _buildProjectCard(
-                      context,
-                      projectName: 'FieldPluse',
-                      description:
-                          'An app that allows assigning tasks to field workers and tracking their progress in real time.',
-                      techUsed:
-                          'Flutter, Firebase, Bloc, GetX, Clean Architecture, Google Maps',
-                    ),
-                    SizedBox(height: 25),
-
-        
                     _buildProjectCard(
                       context,
                       projectName: 'Hotel Check-ins',
                       description:
-                          'An app streamlining hotel guest check-in/out processes with secure guest data handling.',
+                          'An app streamlining hotel guest check-in/out processes with secure guest data handling and digital room keys.',
                       techUsed: 'Flutter, Provider, Firebase',
+                      highlights: ['Fast Check-in', 'Secure Data'],
                     ),
-                    SizedBox(height: 25),
+                    SizedBox(height: 20),
 
-        
                     _buildProjectCard(
                       context,
                       projectName: 'Digital Menu',
                       description:
-                          'A digital restaurant menu app enabling customers to browse and place orders efficiently.',
-                      techUsed: 'Flutter, MVC, QR Code',
+                          'A digital restaurant menu app enabling customers to browse items, customize orders, and place orders efficiently via QR code.',
+                      techUsed: 'Flutter, MVC, QR Code, Firebase',
+                      highlights: [
+                        'QR Scan',
+                        'Order Customization',
+                        'Real-time Updates',
+                      ],
                     ),
                   ],
                 ),
               ),
 
-           
+
               Container(
-         
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 60),
+                width: double.infinity,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: [Colors.blue.shade800, Colors.purple.shade600],
+                    colors: [
+                      Colors.blue.shade800,
+                      Colors.purple.shade700,
+                      Colors.deepPurple.shade900,
+                    ],
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Let\'s Connect!',
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 60,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Let\'s Create Something Amazing',
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          letterSpacing: 1.2,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      'I\'m always open to discussing new projects, creative ideas, or opportunities to be part of your vision.',
-                      style: TextStyle(fontSize: 16, color: Colors.white70),
-                    ),
-                    SizedBox(height: 30),
-
-                 
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 20),
-                      child: Column(
-                        children: [
-                 
-                          ListTile(
-                            leading: Icon(Icons.phone, color: Colors.white70),
-                            title: Text(
-                              '+91 7006844920', 
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onTap: () => _launchURL(
-                              'tel:+917006844920',
-                            ), 
-                          ),
-
-                   
-                          ListTile(
-                            leading: Icon(Icons.email, color: Colors.white70),
-                            title: Text(
-                              'fahadbinfayaz100@gmail.com',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onTap: () =>
-                                _launchURL('mailto:fahadbinfayaz100@gmail.com'),
-                          ),
-
-                  
-                          ListTile(
-                            leading: Icon(
-                              Icons.location_on,
-                              color: Colors.white70,
-                            ),
-                            title: Text(
-                              'srinagar, Jammu and Kashmir, India',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onTap: () {
-                            
-                              _launchURL(
-                                'https://maps.google.com/?q=Kashmir,India',
-                              );
-                            },
-                          ),
-                        ],
+                      const SizedBox(height: 20),
+                      Text(
+                        'I\'m always open to discussing new projects, creative ideas, or opportunities to be part of your vision.',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white.withOpacity(0.9),
+                          height: 1.5,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                    ),
+                      const SizedBox(height: 40),
 
-                    Center(
-                      child: ElevatedButton.icon(
+                      Container(
+                        constraints: const BoxConstraints(maxWidth: 600),
+                        child: Column(
+                          children: [
+                            _buildContactCard(
+                              icon: Icons.phone_rounded,
+                              title: 'Phone',
+                              value: '+91 7006844920',
+                              onTap: () => _launchURL('tel:+917006844920'),
+                            ),
+                            const SizedBox(height: 12),
+                            _buildContactCard(
+                              icon: Icons.email_rounded,
+                              title: 'Email',
+                              value: 'fahadbinfayaz100@gmail.com',
+                              onTap: () => _launchURL(
+                                'mailto:fahadbinfayaz100@gmail.com',
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            _buildContactCard(
+                              icon: Icons.location_on_rounded,
+                              title: 'Location',
+                              value: 'Srinagar, Jammu & Kashmir, India',
+                              onTap: () => _launchURL(
+                                'https://maps.google.com/?q=Srinagar,Kashmir',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      const SizedBox(height: 40),
+
+            
+                      ElevatedButton.icon(
                         onPressed: _downloadCV,
-                        icon: Icon(Icons.download, size: 24),
-                        label: Text(
+                        icon: const Icon(Icons.download_rounded, size: 24),
+                        label: const Text(
                           'Download CV',
                           style: TextStyle(fontSize: 18),
                         ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           foregroundColor: Colors.blue.shade800,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 24,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 32,
                             vertical: 16,
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
+                          elevation: 5,
                         ),
                       ),
-                    ),
-                    SizedBox(height: 40),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                 
-                        _buildSocialButton(
-                          icon: AntDesign.github_outline,
-                          onPressed: () =>
-                              _launchURL('https://github.com/Fahadbinfayaz96'),
-                          color: Colors.black,
-                        ),
-                        SizedBox(width: 20),
-                        _buildSocialButton(
-                          icon: AntDesign.linkedin_outline,
-                          onPressed: () => _launchURL(
-                            'https://linkedin.com/in/fahad-bin-fayaz-87349221a',
+
+                      const SizedBox(height: 40),
+
+                
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _buildSocialButton(
+                            icon: Bootstrap.github,
+                            onPressed: () => _launchURL(
+                              'https://github.com/Fahadbinfayaz96',
+                            ),
                           ),
-                          color: Colors.blue.shade700,
-                        ),
-                      ],
-                    ),
-                  ],
+                          const SizedBox(width: 20),
+                          _buildSocialButton(
+                            icon: Bootstrap.linkedin,
+                            onPressed: () => _launchURL(
+                              'https://linkedin.com/in/fahad-bin-fayaz-87349221a/',
+                            ),
+                          ),
+                        
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-          
+
+              // Footer
               Container(
-                padding: EdgeInsets.all(20),
-                color: Colors.grey[900],
+                padding: const EdgeInsets.all(20),
+                color: _isDark ? Colors.black : Colors.grey[900],
                 child: Center(
                   child: Text(
-                    '© 2023 Fahad Bin Fayaz. Made with Flutter & ❤️',
-                    style: TextStyle(color: Colors.white54),
+                    '© 2024 Fahad Bin Fayaz. Crafted with Flutter & ❤️',
+                    style: TextStyle(
+                      // ignore: deprecated_member_use
+                      color: Colors.white.withOpacity(0.7),
+                      fontSize: 14,
+                    ),
                   ),
                 ),
               ),
@@ -499,75 +598,108 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     );
   }
 
-  Future<void> _downloadCV() async {
-    const cvUrl ="https://drive.google.com/uc?export=download&id=1GZPE1wFItfEoyeKXwdwFmtVxePT3P1C3";
-             
-
-    try {
-      if (await canLaunchUrl(Uri.parse(cvUrl))) {
-        await launchUrl(Uri.parse(cvUrl));
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Could not download CV. Please try again later.'),
-          ),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error downloading CV. Please try again.')),
-      );
-    }
-  }
-
-  Widget _buildEducationItem({
-    required String degree,
-    required String institution,
-    required String period,
-    String description = '',
+  Widget _buildSection(
+    BuildContext context, {
+    required String title,
+    required Widget child,
   }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                degree,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[800],
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 4,
+                height: 32,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.blue.shade800, Colors.purple.shade600],
+                  ),
+                  borderRadius: BorderRadius.circular(2),
                 ),
               ),
-            ),
-            Text(
-              period,
-              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-            ),
-          ],
-        ),
-        SizedBox(height: 8),
-        Text(
-          institution,
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.blue.shade700,
-            fontWeight: FontWeight.w500,
+              const SizedBox(width: 12),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: _isDark ? Colors.white : Colors.grey[900],
+                  letterSpacing: 1.1,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          child,
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContactCard({
+    required IconData icon,
+    required String title,
+    required String value,
+    required VoidCallback onTap,
+  }) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.white.withOpacity(0.2)),
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(icon, color: Colors.white, size: 24),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.white70,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      value,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: Colors.white70,
+                size: 16,
+              ),
+            ],
           ),
         ),
-        SizedBox(height: 12),
-        if (description.isNotEmpty)
-          Text(
-            description,
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey[700],
-              height: 1.5,
-            ),
-          ),
-        SizedBox(height: 24),
-      ],
+      ),
     );
   }
 
@@ -582,37 +714,74 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
             color: Colors.blue.shade800,
           ),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 4),
         Text(
           label,
-          style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.grey.shade600,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildSkillChip(String label, IconData icon) {
-    return Chip(
-      avatar: Icon(icon, size: 18, color: Colors.blue),
-      label: Text(label),
-      backgroundColor: Colors.white,
-      side: BorderSide(color: Colors.blue.shade100),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+  Widget _buildSkillChip(String label, IconData icon, Color color) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: _isDark ? Colors.grey[800] : Colors.white,
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(color: color.withOpacity(0.3), width: 1.5),
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(0.1),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 18, color: color),
+          const SizedBox(width: 8),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: _isDark ? Colors.white : Colors.grey[800],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildSocialButton({
     required IconData icon,
     required VoidCallback onPressed,
-    required Color color,
   }) {
     return InkWell(
       onTap: onPressed,
+      borderRadius: BorderRadius.circular(30),
       child: Container(
         width: 50,
         height: 50,
-        decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-        child: Center(child: Icon(icon, color: color, size: 24)),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Center(child: Icon(icon, color: Colors.blue.shade800, size: 24)),
       ),
     );
   }
@@ -622,74 +791,148 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     required String projectName,
     required String description,
     required String techUsed,
-    String? githubUrl,
-
-    String? playStoreUrl,
+    List<String>? highlights,
   }) {
-    return Card(
-      elevation: 3,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  projectName,
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  description,
-                  style: TextStyle(fontSize: 16, color: Colors.grey.shade700),
-                ),
-                SizedBox(height: 15),
-                Text(
-                  'Tech: $techUsed',
-                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 14),
-                ),
-                SizedBox(height: 15),
-                if (githubUrl != null) ...[
-                  Row(
-                    children: [
-                      ElevatedButton.icon(
-                        onPressed: () => _launchURL(githubUrl ?? ""),
-                        icon: Icon(AntDesign.code_outline, size: 18),
-                        label: Text('View Code'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue.shade800,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      if (playStoreUrl != null)
-                        ElevatedButton.icon(
-                          onPressed: () => _launchURL(playStoreUrl),
-                          icon: Icon(AntDesign.shop_outline, size: 18),
-                          label: Text('View App'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ],
-              ],
-            ),
+    return Container(
+      decoration: BoxDecoration(
+        color: _isDark ? Colors.grey[800] : Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 15,
+            offset: const Offset(0, 5),
           ),
         ],
       ),
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.shade50,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    Icons.folder_rounded,
+                    color: Colors.blue.shade800,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    projectName,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: _isDark ? Colors.white : Colors.grey[900],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              description,
+              style: TextStyle(
+                fontSize: 15,
+                height: 1.5,
+                color: _isDark ? Colors.white70 : Colors.grey[700],
+              ),
+            ),
+            const SizedBox(height: 16),
+            if (highlights != null) ...[
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: highlights.map((highlight) {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade50,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      highlight,
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.blue.shade800,
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 16),
+            ],
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: _isDark ? Colors.grey[900] : Colors.grey[50],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.code_rounded,
+                    size: 18,
+                    color: Colors.blue.shade600,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      techUsed,
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: _isDark ? Colors.white70 : Colors.grey[800],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
+  }
+
+  Future<void> _downloadCV() async {
+    const cvUrl =
+        "https://drive.google.com/uc?export=download&id=1lJB-p_YZwtgRjPK1VHCG0669FzPRNxAk";
+
+    try {
+      if (await canLaunchUrl(Uri.parse(cvUrl))) {
+        await launchUrl(Uri.parse(cvUrl));
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Could not download CV. Please try again later.'),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error downloading CV: $e'),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    }
   }
 }
