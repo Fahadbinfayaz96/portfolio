@@ -205,7 +205,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Hello, I'm Fahad Bin Fayaz, a dedicated Flutter developer with 3+ years of hands-on experience delivering cross-platform mobile apps for Android and iOS. I specialize in building production-ready applications with clean architecture (BLoC), Firebase integrations, and scalable UI/UX solutions.\nBeyond Flutter, I have strong native development capabilities in Android (Kotlin/Jetpack Compose) and iOS (Swift/UIKit), allowing me to implement performant platform-specific features when required. This hybrid expertise ensures I can deliver the right solution for any mobile requirement.",
+                      "Hello, I'm Fahad Bin Fayaz, a dedicated Flutter developer with 4+ years of hands-on experience delivering cross-platform mobile apps for Android and iOS. I specialize in building production-ready applications with clean architecture (BLoC), Firebase integrations, and scalable UI/UX solutions.\nBeyond Flutter, I have strong native development capabilities in Android (Kotlin/Jetpack Compose) and iOS (Swift/UIKit), allowing me to implement performant platform-specific features when required. This hybrid expertise ensures I can deliver the right solution for any mobile requirement.",
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.6,
@@ -408,7 +408,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       description:
                           'Digital food ordering platform with restaurant discovery, table booking, and seamless payment integration.',
                       techUsed: 'Flutter, Laravel Backend, Bloc, Firebase, MVC',
-                      highlights: ["Food Ordring",'Online Payment', 'Reviews'],
+                      highlights: ["Food Ordring", 'Online Payment', 'Reviews'],
                     ),
 
                     const SizedBox(height: 20),
@@ -448,7 +448,6 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   ],
                 ),
               ),
-
 
               Container(
                 width: double.infinity,
@@ -527,7 +526,6 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 
                       const SizedBox(height: 40),
 
-            
                       ElevatedButton.icon(
                         onPressed: _downloadCV,
                         icon: const Icon(Icons.download_rounded, size: 24),
@@ -551,7 +549,6 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 
                       const SizedBox(height: 40),
 
-                
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -568,7 +565,6 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                               'https://linkedin.com/in/fahad-bin-fayaz-87349221a/',
                             ),
                           ),
-                        
                         ],
                       ),
                     ],
