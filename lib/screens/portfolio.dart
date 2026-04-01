@@ -180,7 +180,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Text(
-                              'Flutter Developer | Kotlin • Jetpack Compose | Swift • UIKit',
+                              'Mobile Application Developer | Flutter, Native (Android & iOS), Backend (Node.js)',
                               style: TextStyle(
                                 fontSize: expandedHeight > 200 ? 16 : 14,
                                 color: Colors.white,
@@ -205,7 +205,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Hello, I'm Fahad Bin Fayaz, a dedicated Flutter developer with 4+ years of hands-on experience delivering cross-platform mobile apps for Android and iOS. I specialize in building production-ready applications with clean architecture (BLoC), Firebase integrations, and scalable UI/UX solutions.\nBeyond Flutter, I have strong native development capabilities in Android (Kotlin/Jetpack Compose) and iOS (Swift/UIKit), allowing me to implement performant platform-specific features when required. This hybrid expertise ensures I can deliver the right solution for any mobile requirement.",
+                      " Hi, I’m Fahad Bin Fayaz — a Mobile Developer with 4+ years of experience building high-quality apps using Flutter, along with native development for Android (Kotlin) and iOS (Swift).I also have hands-on experience building backend systems using Node.js, Express.js, and MongoDB, allowing me to develop complete, end-to-end solutions.I focus on clean architecture, scalable design, and delivering smooth, user-friendly experiences.",
                       style: TextStyle(
                         fontSize: 16,
                         height: 1.6,
@@ -230,8 +230,8 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          _buildStatItem('7+', 'Projects'),
-                          _buildStatItem('3+', 'Years'),
+                          _buildStatItem('8+', 'Projects'),
+                          _buildStatItem('4+', 'Years'),
                           _buildStatItem('10K+', 'Lines of Code'),
                           _buildStatItem('100%', 'Satisfaction'),
                         ],
@@ -342,6 +342,24 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       Bootstrap.window,
                       Colors.blue.shade300,
                     ),
+
+                    _buildSkillChip('Node.js', Bootstrap.server, Colors.green),
+                    _buildSkillChip(
+                      'Express.js',
+                      Bootstrap.layers,
+                      Colors.grey,
+                    ),
+                    _buildSkillChip(
+                      'MongoDB',
+                      Bootstrap.database,
+                      Colors.green.shade700,
+                    ),
+                    _buildSkillChip(
+                      'REST APIs',
+                      Bootstrap.link,
+                      Colors.blueGrey,
+                    ),
+
                     _buildSkillChip('Firebase', Bootstrap.google, Colors.amber),
                     _buildSkillChip('CI/CD', Bootstrap.gear_fill, Colors.grey),
                     _buildSkillChip('Provider', Bootstrap.box, Colors.purple),
@@ -433,16 +451,40 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     ),
                     SizedBox(height: 20),
 
+                    const SizedBox(height: 20),
+
                     _buildProjectCard(
                       context,
-                      projectName: 'Digital Menu',
+                      projectName: 'Car Rental Backend',
                       description:
-                          'A digital restaurant menu app enabling customers to browse items, customize orders, and place orders efficiently via QR code.',
-                      techUsed: 'Flutter, MVC, QR Code, Firebase',
+                          'Backend system for car rental platform with authentication, booking management, and role-based access control.',
+                      techUsed: 'Node.js, Express.js, MongoDB, JWT',
+                      highlights: ['REST APIs', 'Auth', 'Scalable'],
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    _buildProjectCard(
+                      context,
+                      projectName: 'Blog API',
+                      description:
+                          'RESTful API for blog platform with CRUD operations, authentication, validation, and pagination.',
+                      techUsed: 'Node.js, Express.js, MongoDB',
+                      highlights: ['CRUD', 'Auth', 'Validation'],
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    _buildProjectCard(
+                      context,
+                      projectName: 'Fruit Delivery App (Native)',
+                      description:
+                          'Native mobile app for fruit ordering and delivery tracking built for both Android and iOS.',
+                      techUsed: 'Kotlin (Android), Swift (iOS)',
                       highlights: [
-                        'QR Scan',
-                        'Order Customization',
-                        'Real-time Updates',
+                        'Native',
+                        'Delivery',
+                        'Firebase realtime db',
                       ],
                     ),
                   ],
@@ -905,7 +947,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 
   Future<void> _downloadCV() async {
     const cvUrl =
-        "https://drive.google.com/uc?export=download&id=1lJB-p_YZwtgRjPK1VHCG0669FzPRNxAk";
+        "https://drive.google.com/uc?export=download&id=1BHOgqxjDN2aoZ5oUzd_JjhQBGVJPgppN";
 
     try {
       if (await canLaunchUrl(Uri.parse(cvUrl))) {
