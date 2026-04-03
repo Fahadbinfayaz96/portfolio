@@ -381,7 +381,31 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   ],
                 ),
               ),
-
+              _buildSection(
+                context,
+                title: 'Open Source & Tools',
+                child: Column(
+                  children: [
+                    _buildProjectCard(
+                      context,
+                      projectName: 'fd_arch_gen (Flutter CLI Tool)',
+                      description:
+                          'A Clean Architecture code generator for Flutter that scaffolds complete features with BLoC or Riverpod. Reduces hours of boilerplate into seconds and improves scalability.',
+                      techUsed:
+                          'Dart, CLI, Clean Architecture, BLoC, Riverpod, GetIt',
+                      highlights: [
+                        'Published on pub.dev',
+                        'CLI Tool',
+                        'Open Source',
+                        'Automation',
+                      ],
+                      githubUrl:
+                          'https://github.com/Fahadbinfayaz96/fd_arch_gen',
+                      liveUrl: 'https://pub.dev/packages/fd_arch_gen',
+                    ),
+                  ],
+                ),
+              ),
               _buildSection(
                 context,
                 title: 'Featured Projects',
@@ -830,6 +854,8 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     required String description,
     required String techUsed,
     List<String>? highlights,
+    String? githubUrl,
+    String? liveUrl,
   }) {
     return Container(
       decoration: BoxDecoration(
@@ -939,6 +965,23 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                 ],
               ),
             ),
+            if (githubUrl != null || liveUrl != null) ...[
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  if (githubUrl != null)
+                    TextButton(
+                      onPressed: () => _launchURL(githubUrl),
+                      child: const Text('GitHub'),
+                    ),
+                  if (liveUrl != null)
+                    TextButton(
+                      onPressed: () => _launchURL(liveUrl),
+                      child: const Text('View Package'),
+                    ),
+                ],
+              ),
+            ],
           ],
         ),
       ),
