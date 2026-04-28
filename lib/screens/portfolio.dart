@@ -2,32 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class PortfolioScreen extends StatelessWidget {
-  const PortfolioScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Fahad Bin Fayaz - Flutter Developer',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Poppins',
-        useMaterial3: true,
-        brightness: Brightness.light,
-      ),
-      darkTheme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Poppins',
-        useMaterial3: true,
-        brightness: Brightness.dark,
-      ),
-      themeMode: ThemeMode.system,
-      home: const PortfolioHomePage(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
 class PortfolioHomePage extends StatefulWidget {
   const PortfolioHomePage({super.key});
 
