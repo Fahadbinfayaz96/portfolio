@@ -8,13 +8,13 @@ import '../widgets/contact_item.dart';
 import '../widgets/fade_slide.dart';
 import '../widgets/ghost_button.dart';
 import '../widgets/glow_orbit.dart';
-import '../widgets/mini_stat.dart';
 import '../widgets/primary_button.dart';
 import '../widgets/project_card.dart';
 import '../widgets/section.dart';
 import '../widgets/skill_group.dart';
 import '../widgets/social_button.dart';
 import '../widgets/stat_card.dart';
+import 'package:icons_plus/icons_plus.dart';
 
 class PortfolioPage extends StatefulWidget {
   const PortfolioPage({super.key});
@@ -402,15 +402,27 @@ class PortfolioPageState extends State<PortfolioPage>
       child: Section(
         label: 'Work',
         title: 'Selected\nprojects',
-        child: Column(
-          children: projects
-              .map(
-                (p) => Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: ProjectCard(project: p, onLaunch: _launch),
-                ),
-              )
-              .toList(),
+        child: GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: MediaQuery.of(context).size.width > 900
+                ? 3
+                : MediaQuery.of(context).size.width > 600
+                ? 2
+                : 1,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+            childAspectRatio: MediaQuery.of(context).size.width > 900
+                ? 1.2
+                : MediaQuery.of(context).size.width > 600
+                ? 0.75
+                : 1.2,
+          ),
+          itemCount: projects.length,
+          itemBuilder: (context, index) {
+            return ProjectCard(project: projects[index], onLaunch: _launch);
+          },
         ),
       ),
     );
@@ -473,12 +485,12 @@ class PortfolioPageState extends State<PortfolioPage>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SocialBtn(
-                    'GH',
+                    Bootstrap.github,
                     () => _launch('https://github.com/Fahadbinfayaz96'),
                   ),
                   const SizedBox(width: 12),
                   SocialBtn(
-                    'in',
+                    Bootstrap.linkedin,
                     () => _launch(
                       'https://linkedin.com/in/fahad-bin-fayaz-87349221a/',
                     ),
@@ -500,7 +512,7 @@ class PortfolioPageState extends State<PortfolioPage>
           border: Border(top: BorderSide(color: C.border)),
         ),
         child: Text(
-          '© 2024 Fahad Bin Fayaz  ·  Crafted with Flutter & ❤️',
+          '© 2025 Fahad Bin Fayaz  ·  Crafted with Flutter & ❤️',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 12,

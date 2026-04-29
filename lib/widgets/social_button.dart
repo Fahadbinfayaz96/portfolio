@@ -1,11 +1,14 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
+import 'package:icons_plus/icons_plus.dart';
 
 import '../utils/app_colors.dart';
 
 class SocialBtn extends StatefulWidget {
-  final String label;
+  final BootstrapIconData icon;
   final VoidCallback onTap;
-  const SocialBtn(this.label, this.onTap, {super.key});
+  const SocialBtn(this.icon, this.onTap, {super.key});
   @override
   State<SocialBtn> createState() => SocialBtnState();
 }
@@ -25,18 +28,10 @@ class SocialBtnState extends State<SocialBtn> {
         decoration: BoxDecoration(
           color: _hovered ? C.accent.withOpacity(0.12) : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: _hovered ? C.accent : C.border),
+          border: Border.all(color: _hovered ? C.accent : C.text),
         ),
         alignment: Alignment.center,
-        child: Text(
-          widget.label,
-          style: TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.w700,
-            color: _hovered ? C.accent : C.muted,
-            fontFamily: 'monospace',
-          ),
-        ),
+        child: Icon(widget.icon),
       ),
     ),
   );
