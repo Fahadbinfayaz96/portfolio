@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:way_point/screens/portfolio.dart';
+import 'package:way_point/screens/splash_screen.dart';
 
 import 'utils/app_colors.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: C.bg,
         useMaterial3: true,
       ),
-      home: const PortfolioPage(),
+      home: SplashScreen(destination: const PortfolioPage()),
     );
   }
 }
